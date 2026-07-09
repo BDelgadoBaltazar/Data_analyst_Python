@@ -1,0 +1,71 @@
+Documentación del proceso
+1. Carga de datos
+Se cargaron los tres archivos CSV: ventas12.csv, productos12.csv, clientes12.csv.
+
+Hallazgo: los datasets contienen información complementaria (ventas → transacciones, productos → catálogo, clientes → perfil).
+
+Modificación: ninguno en este paso, solo lectura inicial con pd.read_csv.
+
+2. Exploración inicial
+Se usaron funciones como info(), head() y describe().
+
+Hallazgos:
+
+En ventas, la columna Fecha estaba en formato texto.
+
+En productos, Precio_Unitario y Stock aparecían como texto.
+
+En clientes, la columna Ingresos incluía símbolos de moneda.
+
+Modificación: ninguno aún, solo diagnóstico.
+
+3. Limpieza de datos
+Ventas:
+
+Se eliminaron duplicados con drop_duplicates().
+
+Se eliminaron valores nulos con dropna().
+
+Se transformó la columna Fecha a formato datetime con pd.to_datetime.
+
+Productos:
+
+Se eliminaron duplicados y nulos.
+
+Se convirtieron Precio_Unitario y Stock a valores numéricos con pd.to_numeric.
+
+Clientes:
+
+Se eliminaron duplicados y nulos.
+
+Se limpiaron los ingresos eliminando símbolos de moneda con replace('[\$,]', '', regex=True) y se transformaron a float.
+
+Se aseguró que Edad fuera numérica.
+
+Hallazgo: los tres DataFrames quedaron consistentes y listos para análisis.
+
+4. Cálculo del gasto por cliente
+Se unieron ventas con productos para obtener el precio de cada transacción.
+
+Se creó la columna Gasto = Cantidad * Precio_Unitario.
+
+Se agruparon los resultados por ID_Cliente con groupby().sum().
+
+Se unió con clientes para enriquecer la información (nombre, ciudad, ingresos).
+
+Hallazgo: ahora tenemos un DataFrame con el total gastado por cada cliente, lo que permite identificar clientes más valiosos.
+
+5. Documentación continua
+Cada paso fue registrado con hallazgos y modificaciones aplicadas.
+
+Esto asegura trazabilidad y transparencia en el proceso de análisis.
+
+El resultado final es un dataset limpio y enriquecido, listo para análisis descriptivo y visualizaciones.
+
+👉 El siguiente paso natural sería realizar un análisis descriptivo:
+
+Top 10 clientes con mayor gasto.
+
+Productos más vendidos.
+
+Ciudades con mayor volumen de ventas.
